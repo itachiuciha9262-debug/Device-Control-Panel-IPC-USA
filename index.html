@@ -1,0 +1,3976 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyber Team Help — Premium Control Center</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    :root{
+      --bg:#060914;
+      --bg2:#0a0e1d;
+      --card:rgba(15,20,39,.86);
+      --card2:rgba(18,25,48,.92);
+      --accent:#735cff;
+      --accent2:#00d4ff;
+      --success:#25e58a;
+      --warning:#ffbd4a;
+      --danger:#ff5d75;
+      --text:#f5f7ff;
+      --muted:#8e9ab5;
+      --line:rgba(255,255,255,.09);
+      --shadow:0 25px 70px rgba(0,0,0,.45);
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      min-height:100vh;
+      background:
+        radial-gradient(circle at 10% 0%,rgba(115,92,255,.14),transparent 30%),
+        radial-gradient(circle at 90% 10%,rgba(0,212,255,.10),transparent 28%),
+        linear-gradient(145deg,var(--bg),var(--bg2));
+      color:var(--text);
+      font-family:"Inter","Noto Sans Bengali",sans-serif;
+      overflow-x:hidden;
+    }
+
+    body.modal-open{
+      overflow:hidden;
+    }
+
+    button,
+    input{
+      font:inherit;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    .hidden{
+      display:none !important;
+    }
+
+    /* ================= LOGIN ================= */
+
+    #loginScreen{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      overflow:hidden;
+      padding:24px;
+    }
+
+    .login-grid{
+      position:absolute;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+      background-size:45px 45px;
+      mask-image:linear-gradient(to bottom,#000,transparent);
+    }
+
+    .login-glow{
+      position:absolute;
+      width:420px;
+      height:420px;
+      border-radius:50%;
+      background:rgba(115,92,255,.18);
+      filter:blur(100px);
+      top:-160px;
+      left:-100px;
+      animation:floatGlow 7s ease-in-out infinite;
+    }
+
+    .login-glow.two{
+      background:rgba(0,212,255,.13);
+      top:auto;
+      left:auto;
+      right:-120px;
+      bottom:-170px;
+      animation-delay:2s;
+    }
+
+    @keyframes floatGlow{
+      50%{transform:translate(35px,25px) scale(1.08)}
+    }
+
+    .login-box{
+      width:min(440px,100%);
+      position:relative;
+      z-index:2;
+      padding:38px 32px 28px;
+      border:1px solid rgba(115,92,255,.28);
+      border-radius:28px;
+      background:rgba(8,12,28,.88);
+      backdrop-filter:blur(24px);
+      box-shadow:var(--shadow);
+    }
+
+    .brand{
+      text-align:center;
+      margin-bottom:32px;
+    }
+
+    .brand-logo,
+    .mini-logo{
+      display:grid;
+      place-items:center;
+      border:1px solid rgba(0,212,255,.35);
+      background:linear-gradient(135deg,rgba(115,92,255,.25),rgba(0,212,255,.12));
+      color:#fff;
+      box-shadow:0 0 30px rgba(115,92,255,.2);
+    }
+
+    .brand-logo{
+      width:76px;
+      height:76px;
+      border-radius:22px;
+      margin:0 auto 17px;
+      font-size:31px;
+    }
+
+    .brand h1{
+      font-size:28px;
+      font-weight:800;
+      letter-spacing:-.7px;
+    }
+
+    .brand p{
+      margin-top:6px;
+      color:var(--accent2);
+      font-size:13px;
+      font-weight:700;
+      letter-spacing:1.7px;
+      text-transform:uppercase;
+    }
+
+    .input-group{
+      margin-bottom:19px;
+    }
+
+    .input-group label{
+      display:block;
+      margin-bottom:8px;
+      color:#9ba8c4;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:1.4px;
+    }
+
+    .input-wrap{
+      position:relative;
+    }
+
+    .input-wrap > i{
+      position:absolute;
+      left:16px;
+      top:50%;
+      transform:translateY(-50%);
+      color:#6f7c9a;
+    }
+
+    .input-wrap input{
+      width:100%;
+      height:54px;
+      padding:0 16px 0 47px;
+      color:#fff;
+      outline:none;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(255,255,255,.035);
+      transition:.2s;
+    }
+
+    .input-wrap input:focus{
+      border-color:rgba(115,92,255,.7);
+      box-shadow:0 0 0 4px rgba(115,92,255,.09);
+    }
+
+    .login-btn,
+    .action-btn,
+    .service-btn,
+    .order-ipc-btn{
+      border:0;
+      color:#fff;
+      font-weight:800;
+      border-radius:14px;
+      transition:.25s;
+    }
+
+    .login-btn{
+      width:100%;
+      height:55px;
+      margin-top:7px;
+      background:linear-gradient(135deg,var(--accent),#5b46d9);
+      box-shadow:0 14px 30px rgba(115,92,255,.22);
+    }
+
+    .login-btn:hover,
+    .action-btn:hover,
+    .service-btn:hover,
+    .order-ipc-btn:hover{
+      transform:translateY(-2px);
+      filter:brightness(1.08);
+    }
+
+    .login-status{
+      min-height:22px;
+      margin-top:13px;
+      text-align:center;
+      color:var(--danger);
+      font-size:13px;
+    }
+
+    .login-footer{
+      margin-top:23px;
+      padding-top:19px;
+      border-top:1px solid var(--line);
+      color:#69758e;
+      text-align:center;
+      font-size:11px;
+    }
+
+    /* ================= APP ================= */
+
+    .app{
+      min-height:100vh;
+    }
+
+    .topbar{
+      height:72px;
+      position:sticky;
+      top:0;
+      z-index:50;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 28px;
+      border-bottom:1px solid var(--line);
+      background:rgba(5,8,19,.83);
+      backdrop-filter:blur(20px);
+    }
+
+    .top-left,
+    .top-right{
+      display:flex;
+      align-items:center;
+    }
+
+    .top-left{
+      gap:12px;
+    }
+
+    .mini-logo{
+      width:43px;
+      height:43px;
+      border-radius:13px;
+      font-size:17px;
+    }
+
+    .top-title{
+      font-size:15px;
+      font-weight:800;
+    }
+
+    .top-sub{
+      margin-top:2px;
+      color:#73809b;
+      font-size:10px;
+      letter-spacing:.7px;
+    }
+
+    .top-right{
+      gap:10px;
+    }
+
+    .online-pill,
+    .live-badge{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid rgba(37,229,138,.2);
+      border-radius:999px;
+      background:rgba(37,229,138,.07);
+      color:var(--success);
+      font-size:10px;
+      font-weight:800;
+      letter-spacing:.8px;
+    }
+
+    .online-pill{
+      padding:8px 12px;
+    }
+
+    .online-dot,
+    .live-badge span{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:var(--success);
+      box-shadow:0 0 12px var(--success);
+      animation:pulse 1.7s infinite;
+    }
+
+    @keyframes pulse{
+      50%{opacity:.35}
+    }
+
+    .logout-btn{
+      width:39px;
+      height:39px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      color:#aab5cb;
+      background:rgba(255,255,255,.035);
+    }
+
+    .container{
+      width:min(1350px,calc(100% - 32px));
+      margin:auto;
+      padding:34px 0 60px;
+    }
+
+    /* ================= HERO ================= */
+
+    .hero{
+      display:grid;
+      grid-template-columns:1.35fr .9fr;
+      gap:22px;
+      margin-bottom:22px;
+    }
+
+    .hero-main,
+    .device-card{
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:
+        radial-gradient(circle at 90% 0%,rgba(115,92,255,.16),transparent 34%),
+        var(--card);
+      box-shadow:var(--shadow);
+    }
+
+    .hero-main{
+      padding:38px;
+      min-height:310px;
+    }
+
+    .hero-badge,
+    .protocol-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid rgba(0,212,255,.22);
+      border-radius:999px;
+      padding:8px 12px;
+      color:var(--accent2);
+      background:rgba(0,212,255,.06);
+      font-size:10px;
+      font-weight:800;
+      letter-spacing:1px;
+    }
+
+    .hero-main h2{
+      max-width:780px;
+      margin-top:18px;
+      font-size:clamp(30px,4vw,51px);
+      line-height:1.08;
+      letter-spacing:-2px;
+    }
+
+    .hero-main h2 span{
+      color:var(--accent2);
+      text-shadow:0 0 25px rgba(0,212,255,.18);
+    }
+
+    .hero-main p{
+      max-width:700px;
+      margin-top:17px;
+      color:var(--muted);
+      line-height:1.7;
+      font-size:14px;
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:25px;
+    }
+
+    .action-btn{
+      min-height:43px;
+      padding:0 17px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+    }
+
+    .action-btn.primary{
+      border-color:transparent;
+      background:linear-gradient(135deg,var(--accent),#5743d6);
+    }
+
+    /* ================= DEVICE ================= */
+
+    .device-wrapper{
+      display:grid;
+      gap:14px;
+    }
+
+    .device-card{
+      padding:20px;
+    }
+
+    .device-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:18px;
+    }
+
+    .device-icon-title{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .device-icon,
+    .section-icon,
+    .module-icon,
+    .ipc-card-icon{
+      display:grid;
+      place-items:center;
+      flex-shrink:0;
+      color:#fff;
+      background:linear-gradient(135deg,rgba(115,92,255,.25),rgba(0,212,255,.11));
+      border:1px solid rgba(115,92,255,.2);
+    }
+
+    .device-icon{
+      width:43px;
+      height:43px;
+      border-radius:13px;
+    }
+
+    .device-name{
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.8px;
+    }
+
+    .telemetry-subtitle{
+      margin-top:4px;
+      color:#68758f;
+      font-size:10px;
+    }
+
+    .live-badge{
+      padding:7px 10px;
+      white-space:nowrap;
+    }
+
+    .connection-list{
+      display:grid;
+      gap:9px;
+    }
+
+    .device-meta{
+      padding:11px 13px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      color:#8e9ab4;
+      background:rgba(255,255,255,.025);
+      font-size:11px;
+    }
+
+    .device-meta i{
+      width:20px;
+      color:var(--accent2);
+    }
+
+    .telemetry-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+    }
+
+    .telemetry-item{
+      padding:12px;
+      border:1px solid var(--line);
+      border-radius:13px;
+      background:rgba(255,255,255,.025);
+    }
+
+    .telemetry-label{
+      display:flex;
+      justify-content:space-between;
+      gap:8px;
+      font-size:10px;
+      color:#8793ad;
+    }
+
+    .telemetry-label strong{
+      color:#e9edfa;
+    }
+
+    .telemetry-bar{
+      height:4px;
+      margin-top:10px;
+      border-radius:10px;
+      background:#1a2034;
+      overflow:hidden;
+    }
+
+    .telemetry-fill{
+      height:100%;
+      border-radius:10px;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      transition:width .5s;
+    }
+
+    .telemetry-note,
+    .telemetry-mini-row{
+      margin-top:7px;
+      color:#65728d;
+      font-size:9px;
+    }
+
+    .telemetry-mini-row{
+      display:flex;
+      justify-content:space-between;
+    }
+
+    .telemetry-footer{
+      display:flex;
+      justify-content:space-between;
+      margin-top:13px;
+      color:#62708b;
+      font-size:9px;
+    }
+
+    .telemetry-footer i{
+      color:var(--success);
+    }
+
+    /* ================= CAMERA  ================= */
+
+    .stream-section{
+      margin-top:22px;
+      padding:22px;
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:var(--card);
+    }
+
+    .section-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+      margin-bottom:17px;
+    }
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .section-icon{
+      width:43px;
+      height:43px;
+      border-radius:13px;
+    }
+
+    .section-title h3{
+      font-size:15px;
+    }
+
+    .section-title p{
+      margin-top:4px;
+      color:#66728b;
+      font-size:10px;
+    }
+
+    .camera-viewport{
+      min-height:330px;
+      position:relative;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      border:1px solid rgba(0,212,255,.2);
+      border-radius:19px;
+      background:
+        radial-gradient(circle,rgba(0,212,255,.09),transparent 30%),
+        repeating-linear-gradient(
+          0deg,
+          rgba(255,255,255,.025) 0,
+          rgba(255,255,255,.025) 1px,
+          transparent 1px,
+          transparent 5px
+        ),
+        #080d19;
+    }
+
+    .camera-center{
+      text-align:center;
+      color:#71809c;
+    }
+
+    .camera-center i{
+      display:block;
+      margin-bottom:13px;
+      color:var(--accent2);
+      font-size:43px;
+      animation:cameraPulse 2s infinite;
+    }
+
+    @keyframes cameraPulse{
+      50%{transform:scale(1.08);opacity:.55}
+    }
+
+    .camera-center strong{
+      display:block;
+      color:#dce3f4;
+      font-size:12px;
+      letter-spacing:1px;
+    }
+
+    .camera-center span{
+      display:block;
+      margin-top:7px;
+      font-size:10px;
+    }
+
+    .cam-overlay{
+      position:absolute;
+      z-index:2;
+      color:#8190aa;
+      font-size:9px;
+    }
+
+    .cam-overlay.top-left{top:16px;left:18px}
+    .cam-overlay.top-right{top:16px;right:18px;text-align:right}
+    .cam-overlay.bottom-left{bottom:16px;left:18px}
+    .cam-overlay.bottom-right{bottom:16px;right:18px;text-align:right}
+
+    .cam-title{
+      color:#b9c6dc;
+      font-weight:800;
+    }
+
+    .cam-network{
+      margin-top:5px;
+      color:#5d6a82;
+    }
+
+    .cam-live-indicator{
+      color:var(--success);
+      font-weight:800;
+    }
+
+    .cam-red-dot{
+      display:inline-block;
+      width:7px;
+      height:7px;
+      margin-right:5px;
+      border-radius:50%;
+      background:var(--danger);
+    }
+
+    /* ================= TABS ================= */
+
+    .tabs{
+      display:flex;
+      gap:8px;
+      margin:22px 0;
+      padding:7px;
+      overflow:auto;
+      border:1px solid var(--line);
+      border-radius:17px;
+      background:rgba(255,255,255,.025);
+    }
+
+    .nav-btn{
+      min-width:170px;
+      height:44px;
+      border:0;
+      border-radius:12px;
+      color:#77839c;
+      background:transparent;
+      font-size:10px;
+      font-weight:800;
+      letter-spacing:.8px;
+      white-space:nowrap;
+    }
+
+    .nav-btn.active{
+      color:#fff;
+      background:linear-gradient(135deg,rgba(115,92,255,.8),rgba(76,61,180,.8));
+      box-shadow:0 8px 20px rgba(115,92,255,.15);
+    }
+
+    /* ================= CONTENT ================= */
+
+    .content-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:20px;
+      margin-bottom:19px;
+    }
+
+    .content-heading h2{
+      font-size:22px;
+    }
+
+    .content-heading p{
+      margin-top:6px;
+      color:#68758e;
+      font-size:11px;
+    }
+
+    .search-box{
+      width:280px;
+      position:relative;
+    }
+
+    .search-box i{
+      position:absolute;
+      left:14px;
+      top:50%;
+      transform:translateY(-50%);
+      color:#5f6b85;
+      font-size:12px;
+    }
+
+    .search-box input{
+      width:100%;
+      height:42px;
+      padding:0 14px 0 38px;
+      outline:none;
+      border:1px solid var(--line);
+      border-radius:12px;
+      color:#fff;
+      background:rgba(255,255,255,.03);
+      font-size:11px;
+    }
+
+    .category{
+      margin-bottom:22px;
+      padding:20px;
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:rgba(255,255,255,.018);
+    }
+
+    .category-title{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:16px;
+    }
+
+    .category-title i{
+      color:var(--accent2);
+    }
+
+    .category-title h3{
+      font-size:11px;
+      letter-spacing:1px;
+    }
+
+    .category-title span{
+      margin-left:auto;
+      color:#59667f;
+      font-size:9px;
+    }
+
+    .module-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:11px;
+    }
+
+    .module-card{
+      min-height:155px;
+      position:relative;
+      padding:18px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:
+        radial-gradient(circle at 100% 0%,rgba(115,92,255,.08),transparent 40%),
+        rgba(10,14,29,.75);
+      cursor:pointer;
+      transition:.25s;
+    }
+
+    .module-card:hover{
+      transform:translateY(-4px);
+      border-color:rgba(115,92,255,.45);
+      box-shadow:0 17px 35px rgba(0,0,0,.25);
+    }
+
+    .module-status{
+      width:6px;
+      height:6px;
+      position:absolute;
+      right:14px;
+      top:15px;
+      border-radius:50%;
+      background:var(--success);
+      box-shadow:0 0 9px rgba(37,229,138,.7);
+    }
+
+    .module-icon{
+      width:42px;
+      height:42px;
+      margin-bottom:14px;
+      border-radius:13px;
+      font-size:18px;
+    }
+
+    .module-name{
+      padding-right:10px;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .module-desc{
+      margin-top:7px;
+      color:#68758f;
+      font-size:9px;
+      line-height:1.55;
+    }
+
+    .module-arrow{
+      position:absolute;
+      right:15px;
+      bottom:15px;
+      color:#536078;
+      font-size:10px;
+    }
+
+    /* ================= SERVICE ================= */
+
+    .service-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:17px;
+    }
+
+    .service-card{
+      position:relative;
+      overflow:hidden;
+      padding:25px;
+      border:1px solid var(--line);
+      border-radius:22px;
+      background:
+        radial-gradient(circle at 100% 0%,rgba(115,92,255,.10),transparent 40%),
+        var(--card);
+      box-shadow:var(--shadow);
+    }
+
+    .service-card.featured{
+      border-color:rgba(115,92,255,.38);
+    }
+
+    .service-card h3{
+      font-size:18px;
+    }
+
+    .service-card p{
+      min-height:58px;
+      margin-top:10px;
+      color:#77839d;
+      font-size:11px;
+      line-height:1.65;
+    }
+
+    .service-price{
+      margin:20px 0;
+      color:#fff;
+      font-size:30px;
+      font-weight:800;
+    }
+
+    .service-price small{
+      color:#69758e;
+      font-size:9px;
+      font-weight:500;
+    }
+
+    .service-list{
+      list-style:none;
+      display:grid;
+      gap:10px;
+      margin-bottom:23px;
+    }
+
+    .service-list li{
+      color:#8d99b0;
+      font-size:10px;
+    }
+
+    .service-list i{
+      margin-right:7px;
+      color:var(--success);
+    }
+
+    .service-btn{
+      width:100%;
+      height:48px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.045);
+    }
+
+    .service-btn.primary{
+      background:linear-gradient(135deg,var(--accent),#5140ca);
+    }
+
+    /* ================= MODAL ================= */
+
+    .activation-modal{
+      position:fixed;
+      inset:0;
+      z-index:1000;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+    }
+
+    .activation-modal.open{
+      display:flex;
+    }
+
+    .activation-overlay{
+      position:absolute;
+      inset:0;
+      background:rgba(1,3,10,.78);
+      backdrop-filter:blur(12px);
+    }
+
+    .activation-box{
+      width:min(650px,100%);
+      max-height:92vh;
+      position:relative;
+      z-index:2;
+      overflow-y:auto;
+      padding:29px;
+      border:1px solid rgba(115,92,255,.3);
+      border-radius:25px;
+      background:
+        radial-gradient(circle at 100% 0%,rgba(0,212,255,.10),transparent 35%),
+        #0b1020;
+      box-shadow:0 35px 100px rgba(0,0,0,.65);
+      animation:modalIn .22s ease;
+    }
+
+    @keyframes modalIn{
+      from{opacity:0;transform:translateY(14px) scale(.98)}
+      to{opacity:1;transform:none}
+    }
+
+    .activation-close{
+      width:38px;
+      height:38px;
+      position:absolute;
+      right:17px;
+      top:17px;
+      z-index:5;
+      border:1px solid var(--line);
+      border-radius:11px;
+      color:#8793aa;
+      background:rgba(255,255,255,.035);
+    }
+
+    .activation-box h2{
+      margin-top:17px;
+      padding-right:40px;
+      font-size:25px;
+    }
+
+    .activation-intro{
+      margin-top:12px;
+      color:#8490a9;
+      font-size:11px;
+      line-height:1.75;
+    }
+
+    .activation-intro strong{
+      color:#dce5f7;
+    }
+
+    .security-notice{
+      display:flex;
+      gap:13px;
+      margin-top:19px;
+      padding:16px;
+      border:1px solid rgba(0,212,255,.17);
+      border-radius:16px;
+      background:rgba(0,212,255,.045);
+    }
+
+    .security-notice-icon{
+      width:38px;
+      height:38px;
+      display:grid;
+      place-items:center;
+      flex-shrink:0;
+      border-radius:11px;
+      color:var(--accent2);
+      background:rgba(0,212,255,.09);
+    }
+
+    .security-notice h3{
+      font-size:12px;
+    }
+
+    .security-notice p{
+      margin-top:6px;
+      color:#71809b;
+      font-size:10px;
+      line-height:1.65;
+    }
+
+    .protection-btn{
+      width:100%;
+      height:47px;
+      margin-top:13px;
+      border:1px solid rgba(115,92,255,.25);
+      border-radius:13px;
+      color:#dce2f2;
+      background:rgba(115,92,255,.08);
+      text-align:left;
+      padding:0 15px;
+      font-weight:800;
+      font-size:11px;
+    }
+
+    .protection-btn i{
+      float:right;
+      color:var(--accent2);
+    }
+
+    .protection-details{
+      margin-top:10px;
+      padding:15px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(255,255,255,.025);
+    }
+
+    .protection-details ul{
+      list-style:none;
+      display:grid;
+      gap:11px;
+    }
+
+    .protection-details li{
+      color:#7d8aa4;
+      font-size:10px;
+      line-height:1.5;
+    }
+
+    .protection-details li i{
+      width:20px;
+      color:var(--success);
+    }
+
+    .order-ipc-btn{
+      width:100%;
+      min-height:51px;
+      margin-top:15px;
+      background:linear-gradient(135deg,var(--accent),#5140d0);
+      box-shadow:0 14px 30px rgba(115,92,255,.18);
+    }
+
+    /* IPC FINAL */
+
+    .ipc-registration-card{
+      margin-top:20px;
+      padding:18px;
+      border:1px solid rgba(0,212,255,.18);
+      border-radius:18px;
+      background:rgba(0,212,255,.035);
+    }
+
+    .ipc-card-header{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      padding-bottom:15px;
+      border-bottom:1px solid var(--line);
+    }
+
+    .ipc-card-icon{
+      width:40px;
+      height:40px;
+      border-radius:12px;
+    }
+
+    .ipc-card-header h3{
+      font-size:12px;
+    }
+
+    .ipc-card-header span{
+      display:block;
+      margin-top:4px;
+      color:#63708a;
+      font-size:9px;
+    }
+
+    .ipc-info{
+      margin-top:6px;
+    }
+
+    .ipc-row{
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      padding:13px 0;
+      border-bottom:1px solid rgba(255,255,255,.055);
+      color:#71809a;
+      font-size:10px;
+    }
+
+    .ipc-row:last-child{
+      border-bottom:0;
+    }
+
+    .ipc-row strong{
+      color:#e4e9f6;
+      text-align:right;
+    }
+
+    .status-active{
+      color:var(--success) !important;
+    }
+
+    .ipc-code{
+      color:var(--accent2) !important;
+      font-family:monospace;
+      letter-spacing:.7px;
+    }
+
+    .copy-ipc-btn{
+      width:100%;
+      height:43px;
+      margin-top:5px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      color:#aab5c9;
+      background:rgba(255,255,255,.035);
+      font-size:10px;
+      font-weight:700;
+    }
+
+    .ipc-footer-note{
+      display:flex;
+      gap:9px;
+      margin-top:15px;
+      color:#64718a;
+      font-size:9px;
+      line-height:1.65;
+    }
+
+    .ipc-footer-note i{
+      color:var(--warning);
+      margin-top:2px;
+    }
+
+    /* ================= TOAST ================= */
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:25px;
+      z-index:2000;
+      display:flex;
+      align-items:center;
+      gap:9px;
+      padding:12px 16px;
+      border:1px solid rgba(37,229,138,.25);
+      border-radius:13px;
+      color:#dcefe7;
+      background:#0d1720;
+      box-shadow:var(--shadow);
+      transform:translate(-50%,20px);
+      opacity:0;
+      pointer-events:none;
+      transition:.25s;
+      font-size:11px;
+    }
+
+    .toast.show{
+      transform:translate(-50%,0);
+      opacity:1;
+    }
+
+    .toast i{
+      color:var(--success);
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer{
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      padding:22px 28px;
+      border-top:1px solid var(--line);
+      color:#58647c;
+      font-size:9px;
+    }
+
+    footer strong{
+      color:#8b96ac;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media(max-width:1050px){
+      .hero{
+        grid-template-columns:1fr;
+      }
+
+      .module-grid{
+        grid-template-columns:repeat(3,1fr);
+      }
+
+      .service-grid{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media(max-width:720px){
+      .topbar{
+        padding:0 15px;
+      }
+
+      .online-pill{
+        display:none;
+      }
+
+      .container{
+        width:min(100% - 20px,1350px);
+        padding-top:20px;
+      }
+
+      .hero-main{
+        padding:25px;
+      }
+
+      .hero-main h2{
+        font-size:32px;
+        letter-spacing:-1.2px;
+      }
+
+      .device-wrapper{
+        grid-template-columns:1fr;
+      }
+
+      .module-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .service-grid{
+        grid-template-columns:1fr;
+      }
+
+      .content-top{
+        align-items:stretch;
+        flex-direction:column;
+      }
+
+      .search-box{
+        width:100%;
+      }
+
+      .camera-viewport{
+        min-height:260px;
+      }
+
+      footer{
+        flex-direction:column;
+        padding:20px;
+      }
+
+      .activation-box{
+        padding:23px 18px;
+      }
+    }
+
+    @media(max-width:440px){
+      .login-box{
+        padding:30px 20px 24px;
+      }
+
+      .module-grid{
+        grid-template-columns:1fr;
+      }
+
+      .telemetry-grid{
+        grid-template-columns:1fr;
+      }
+
+      .nav-btn{
+        min-width:140px;
+      }
+
+      .ipc-row{
+        flex-direction:column;
+        gap:5px;
+      }
+
+      .ipc-row strong{
+        text-align:left;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= LOGIN ================= -->
+
+  <div id="loginScreen">
+
+    <div class="login-grid"></div>
+    <div class="login-glow"></div>
+    <div class="login-glow two"></div>
+
+    <div class="login-box">
+
+      <div class="brand">
+        <div class="brand-logo">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+
+        <h1>Cyber Team Help</h1>
+        <p>Premium Control Center</p>
+      </div>
+
+      <form id="loginForm">
+
+        <div class="input-group">
+          <label>USERNAME</label>
+
+          <div class="input-wrap">
+            <i class="fa-solid fa-user"></i>
+
+            <input
+              id="username"
+              type="text"
+              placeholder="Enter username"
+              autocomplete="username"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>PASSWORD</label>
+
+          <div class="input-wrap">
+            <i class="fa-solid fa-lock"></i>
+
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter password"
+              autocomplete="current-password"
+              required
+            >
+          </div>
+        </div>
+
+        <button class="login-btn" type="submit">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          Secure Login
+        </button>
+
+        <div class="login-status" id="loginStatus"></div>
+
+      </form>
+
+      <div class="login-footer">
+        Authorized access only • Cyber Team Help
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ================= MAIN APP ================= -->
+
+  <div id="app" class="app hidden">
+
+    <header class="topbar">
+
+      <div class="top-left">
+
+        <div class="mini-logo">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+
+        <div>
+          <div class="top-title">Cyber Team Help</div>
+          <div class="top-sub">Premium Control Center</div>
+        </div>
+
+      </div>
+
+      <div class="top-right">
+
+        <div class="online-pill" id="onlinePill">
+          <span class="online-dot"></span>
+          <strong id="globalOnlineText">ONLINE</strong>
+        </div>
+
+        <button
+          class="logout-btn"
+          id="logoutBtn"
+          title="Logout"
+          type="button"
+        >
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <main class="container">
+
+      <!-- HERO + DEVICE -->
+
+      <section class="hero">
+
+        <div class="hero-main">
+
+          <div class="hero-badge">
+            <i class="fa-solid fa-crown"></i>
+            ADVANCED SECURITY CONTROL
+          </div>
+
+          <h2>
+            Smarter
+            <span>Device Management</span>
+            in One Powerful Dashboard
+          </h2>
+
+          <p>
+            Monitor authorized device services, inspect browser-exposed
+            diagnostics, and manage available infrastructure tools
+            from a unified control interface.
+          </p>
+
+          <div class="hero-actions">
+
+            <button
+              class="action-btn primary"
+              type="button"
+              onclick="switchTab('control')"
+            >
+              <i class="fa-solid fa-sliders"></i>
+              Control Center
+            </button>
+
+            <button
+              class="action-btn"
+              type="button"
+              onclick="switchTab('social')"
+            >
+              <i class="fa-solid fa-share-nodes"></i>
+              Social
+            </button>
+
+            <button
+              class="action-btn"
+              type="button"
+              onclick="switchTab('service')"
+            >
+              <i class="fa-solid fa-layer-group"></i>
+              Services
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="device-wrapper">
+
+          <div class="device-card">
+
+            <div class="device-head">
+
+              <div class="device-icon-title">
+
+                <div class="device-icon">
+                  <i class="fa-solid fa-link"></i>
+                </div>
+
+                <div class="device-name">
+                  DEVICE CONNECTION
+                </div>
+
+              </div>
+
+              <div class="live-badge">
+                <span></span>
+                SESSION
+              </div>
+
+            </div>
+
+            <div class="connection-list">
+
+              <div class="device-meta">
+                <i class="fa-solid fa-phone"></i>
+                Authorized Phone +8801765498161
+              </div>
+
+              <div class="device-meta">
+                <i class="fa-solid fa-shield-halved"></i>
+                Account authorization interface
+              </div>
+
+              <div class="device-meta">
+                <i class="fa-solid fa-link"></i>
+                Service gateway ready
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- TELEMETRY -->
+
+          <div class="device-card telemetry-card">
+
+            <div class="device-head">
+
+              <div class="device-icon-title">
+
+                <div class="device-icon">
+                  <i class="fa-solid fa-microchip"></i>
+                </div>
+
+                <div>
+                  <div class="device-name">
+                    HARDWARE TELEMETRY
+                  </div>
+
+                  <div class="telemetry-subtitle">
+                    Browser-exposed client diagnostics
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="live-badge">
+                <span></span>
+                LIVE
+              </div>
+
+            </div>
+
+
+            <div class="telemetry-grid">
+
+              <div class="telemetry-item">
+
+                <div class="telemetry-label">
+                  <span>
+                    <i class="fa-solid fa-battery-three-quarters"></i>
+                    Battery
+                  </span>
+
+                  <strong id="batteryValue">Checking...</strong>
+                </div>
+
+                <div class="telemetry-bar">
+                  <div
+                    class="telemetry-fill"
+                    id="batteryBar"
+                    style="width:0%"
+                  ></div>
+                </div>
+
+                <div
+                  class="telemetry-note"
+                  id="batteryStatus"
+                >
+                  Waiting for Battery API...
+                </div>
+
+              </div>
+
+
+              <div class="telemetry-item">
+
+                <div class="telemetry-label">
+                  <span>
+                    <i class="fa-solid fa-wifi"></i>
+                    Network Status
+                  </span>
+
+                  <strong id="networkStatus">
+                    Checking...
+                  </strong>
+                </div>
+
+                <div class="telemetry-mini-row">
+                  <span id="networkType">Type: —</span>
+                  <span id="networkSpeed">Down: —</span>
+                </div>
+
+              </div>
+
+
+              <div class="telemetry-item">
+
+                <div class="telemetry-label">
+                  <span>
+                    <i class="fa-solid fa-memory"></i>
+                    Memory
+                  </span>
+
+                  <strong id="memoryValue">—</strong>
+                </div>
+
+                <div
+                  class="telemetry-note"
+                  id="memoryDetail"
+                >
+                  Approximate device memory
+                </div>
+
+              </div>
+
+
+              <div class="telemetry-item">
+
+                <div class="telemetry-label">
+                  <span>
+                    <i class="fa-solid fa-microchip"></i>
+                    CPU
+                  </span>
+
+                  <strong id="cpuCores">—</strong>
+                </div>
+
+                <div
+                  class="telemetry-note"
+                  id="cpuStatus"
+                >
+                  Logical processors reported by browser
+                </div>
+
+              </div>
+
+
+              <div class="telemetry-item">
+
+                <div class="telemetry-label">
+                  <span>
+                    <i class="fa-solid fa-display"></i>
+                    Display
+                  </span>
+
+                  <strong id="screenResolution">—</strong>
+                </div>
+
+                <div
+                  class="telemetry-note"
+                  id="viewportSize"
+                >
+                  Viewport: —
+                </div>
+
+              </div>
+
+
+              <div class="telemetry-item">
+
+                <div class="telemetry-label">
+                  <span>
+                    <i class="fa-solid fa-earth-americas"></i>
+                    Region
+                  </span>
+
+                  <strong id="timezoneValue">—</strong>
+                </div>
+
+                <div
+                  class="telemetry-note"
+                  id="languageValue"
+                >
+                  Language: —
+                </div>
+
+              </div>
+
+
+              <div class="telemetry-item">
+
+                <div class="telemetry-label">
+                  <span>
+                    <i class="fa-solid fa-gauge-high"></i>
+                    Connection
+                  </span>
+
+                  <strong id="latencyValue">—</strong>
+                </div>
+
+                <div
+                  class="telemetry-note"
+                  id="connectionQuality"
+                >
+                  Testing latency...
+                </div>
+
+              </div>
+
+
+              <div class="telemetry-item">
+
+                <div class="telemetry-label">
+                  <span>
+                    <i class="fa-solid fa-circle-nodes"></i>
+                    Session Status
+                  </span>
+
+                  <strong
+                    id="sessionStatus"
+                    class="status-active"
+                  >
+                    ACTIVE
+                  </strong>
+                </div>
+
+                <div class="telemetry-note">
+                  Last telemetry:
+                  <span id="lastTelemetry">—</span>
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div class="telemetry-footer">
+
+              <span>
+                <i class="fa-solid fa-circle-check"></i>
+                Client telemetry active
+              </span>
+
+              <span>
+                Browser APIs
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- CAMERA  -->
+
+      <section class="stream-section">
+
+        <div class="section-head">
+
+          <div class="section-title">
+
+            <div class="section-icon">
+              <i class="fa-solid fa-video"></i>
+            </div>
+
+            <div>
+              <h3>Live Stream Viewport</h3>
+
+              <p>
+                Authorized 16:9 Camera Session Preview
+              </p>
+            </div>
+
+          </div>
+
+          <div class="live-badge">
+            <span></span>
+             FEED
+          </div>
+
+        </div>
+
+
+        <div class="camera-viewport">
+
+          <div class="cam-overlay top-left">
+
+            <div class="cam-title">
+              <i
+                class="fa-solid fa-shield-halved"
+                style="color:#00d4ff;"
+              ></i>
+
+              CAM-01 [AUTHORIZED]
+            </div>
+
+            <div class="cam-network">
+              PROTOCOL: SECURE SESSION
+            </div>
+
+          </div>
+
+
+          <div class="cam-overlay top-right">
+
+            <div class="cam-live-indicator">
+              <span class="cam-red-dot"></span>
+              Active
+            </div>
+
+            <div class="cam-network">
+              1080P • PREVIEW
+            </div>
+
+          </div>
+
+
+          <div class="camera-center">
+
+            <i class="fa-solid fa-video"></i>
+
+            <strong>
+              AUTHORIZED STREAM PREVIEW
+            </strong>
+
+            <span>
+              Camera access requires explicit user permission.
+            </span>
+
+          </div>
+
+
+          <div class="cam-overlay bottom-left">
+
+            <div>
+              STATUS: READY
+            </div>
+
+            <div class="cam-network">
+              USER-AUTHORIZED SESSION
+            </div>
+
+          </div>
+
+
+          <div class="cam-overlay bottom-right">
+
+            <div>
+              SIGNAL: Active
+            </div>
+
+            <div
+              class="cam-network"
+              style="color:#25e58a;"
+            >
+              SECURITY: ACTIVE
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- TABS -->
+
+      <nav class="tabs">
+
+        <button
+          class="nav-btn active"
+          data-tab="social"
+          onclick="switchTab('social')"
+          type="button"
+        >
+          <i class="fa-solid fa-share-nodes"></i>
+          SOCIAL MODULES
+        </button>
+
+        <button
+          class="nav-btn"
+          data-tab="control"
+          onclick="switchTab('control')"
+          type="button"
+        >
+          <i class="fa-solid fa-sliders"></i>
+          CONTROL CENTER
+        </button>
+
+        <button
+          class="nav-btn"
+          data-tab="service"
+          onclick="switchTab('service')"
+          type="button"
+        >
+          <i class="fa-solid fa-layer-group"></i>
+          SERVICE PLANS
+        </button>
+
+      </nav>
+
+
+      <!-- SOCIAL -->
+
+      <section
+        id="socialTab"
+        class="tab-panel"
+      >
+
+        <div class="content-top">
+
+          <div class="content-heading">
+            <h2>Social & Messaging Hub</h2>
+
+            <p>
+              Authorized service modules and communication
+              gateway configuration.
+            </p>
+          </div>
+
+          <div class="search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+              type="text"
+              placeholder="Filter social modules..."
+              oninput="filterModules(this,'social')"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="category">
+
+          <div class="category-title">
+
+            <i class="fa-solid fa-comments"></i>
+
+            <h3>
+              COMMUNICATION GATEWAYS
+            </h3>
+
+            <span>
+              12 Available
+            </span>
+
+          </div>
+
+
+          <div class="module-grid">
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Facebook')"
+              data-search="facebook social"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-brands fa-facebook-f"></i>
+              </div>
+              <div class="module-name">Facebook</div>
+              <div class="module-desc">
+                Authorized account connection configuration.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Messenger')"
+              data-search="messenger chat"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-brands fa-facebook-messenger"></i>
+              </div>
+              <div class="module-name">Messenger</div>
+              <div class="module-desc">
+                Communication channel configuration and review.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('WhatsApp')"
+              data-search="whatsapp chat"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-brands fa-whatsapp"></i>
+              </div>
+              <div class="module-name">WhatsApp</div>
+              <div class="module-desc">
+                Authorized session configuration and status.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Instagram')"
+              data-search="instagram media"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-brands fa-instagram"></i>
+              </div>
+              <div class="module-name">Instagram</div>
+              <div class="module-desc">
+                Authorized profile integration configuration.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('TikTok')"
+              data-search="tiktok stream"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-brands fa-tiktok"></i>
+              </div>
+              <div class="module-name">TikTok</div>
+              <div class="module-desc">
+                Authorized activity integration configuration.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Telegram')"
+              data-search="telegram channel chat"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-brands fa-telegram"></i>
+              </div>
+              <div class="module-name">Telegram</div>
+              <div class="module-desc">
+                Authorized channel and account configuration.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Snapchat')"
+              data-search="snapchat media chat"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-brands fa-snapchat"></i>
+              </div>
+              <div class="module-name">Snapchat</div>
+              <div class="module-desc">
+                Authorized service integration configuration.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Twitter / X')"
+              data-search="twitter x feed"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-brands fa-x-twitter"></i>
+              </div>
+              <div class="module-name">Twitter / X</div>
+              <div class="module-desc">
+                Authorized account integration configuration.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Discord')"
+              data-search="discord server chat"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-brands fa-discord"></i>
+              </div>
+              <div class="module-name">Discord</div>
+              <div class="module-desc">
+                Authorized server integration configuration.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Google Accounts')"
+              data-search="google account"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-brands fa-google"></i>
+              </div>
+              <div class="module-name">Google Accounts</div>
+              <div class="module-desc">
+                OAuth authorization configuration.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Chrome')"
+              data-search="chrome web browser"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-brands fa-chrome"></i>
+              </div>
+              <div class="module-name">Chrome</div>
+              <div class="module-desc">
+                Browser environment configuration and diagnostics.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('IMO')"
+              data-search="imo call voice"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-solid fa-phone-volume"></i>
+              </div>
+              <div class="module-name">IMO</div>
+              <div class="module-desc">
+                Authorized VoIP service configuration.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- CONTROL -->
+
+      <section
+        id="controlTab"
+        class="tab-panel hidden"
+      >
+
+        <div class="content-top">
+
+          <div class="content-heading">
+            <h2>Device Instrumentation</h2>
+
+            <p>
+              Authorized system diagnostics and feature configuration.
+            </p>
+          </div>
+
+          <div class="search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+              type="text"
+              placeholder="Filter controls..."
+              oninput="filterModules(this,'control')"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="category">
+
+          <div class="category-title">
+
+            <i class="fa-solid fa-microchip"></i>
+
+            <h3>
+              SYSTEM CONTROLS & MONITORING
+            </h3>
+
+            <span>
+              16 Available
+            </span>
+
+          </div>
+
+
+          <div class="module-grid">
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Live GPS Location')"
+              data-search="live location gps map"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-solid fa-location-crosshairs"></i>
+              </div>
+              <div class="module-name">Live Location</div>
+              <div class="module-desc">
+                Location features require explicit browser/user authorization.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Location Tracking')"
+              data-search="location tracking gps history routes"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-solid fa-route"></i>
+              </div>
+              <div class="module-name">Location Tracking</div>
+              <div class="module-desc">
+                Authorized location service configuration.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Media Gallery')"
+              data-search="gallery photos media pictures"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-solid fa-images"></i>
+              </div>
+              <div class="module-name">Media Gallery</div>
+              <div class="module-desc">
+                User-selected media access configuration.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('File Manager')"
+              data-search="files documents storage manager"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-solid fa-file-lines"></i>
+              </div>
+              <div class="module-name">File Manager</div>
+              <div class="module-desc">
+                User-authorized file selection and management.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Directory Tree')"
+              data-search="folder directory structure"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-solid fa-folder-tree"></i>
+              </div>
+              <div class="module-name">Directory Tree</div>
+              <div class="module-desc">
+                Authorized storage structure diagnostics.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Installed Apps')"
+              data-search="apps applications installed software"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-solid fa-cubes"></i>
+              </div>
+              <div class="module-name">Installed Apps</div>
+              <div class="module-desc">
+                Browser-visible application environment diagnostics.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Notifications')"
+              data-search="notifications alerts push messages"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-solid fa-bell"></i>
+              </div>
+              <div class="module-name">Notifications</div>
+              <div class="module-desc">
+                Notification permission and service configuration.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Call History Logs')"
+              data-search="call history logs calls"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-solid fa-phone"></i>
+              </div>
+              <div class="module-name">Call History Logs</div>
+              <div class="module-desc">
+                Authorized service integration placeholder.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Audio Call Recordings')"
+              data-search="call recording audio voice records"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-solid fa-microphone"></i>
+              </div>
+              <div class="module-name">Call Recordings</div>
+              <div class="module-desc">
+                Authorized audio workflow configuration.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Incoming & Outgoing Calls')"
+              data-search="incoming outgoing call logs calls"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-solid fa-phone-alt"></i>
+              </div>
+              <div class="module-name">
+                Incoming / Outgoing Calls
+              </div>
+              <div class="module-desc">
+                Authorized telephony integration placeholder.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Live Camera Stream')"
+              data-search="camera video streaming"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-solid fa-camera"></i>
+              </div>
+              <div class="module-name">Camera Stream</div>
+              <div class="module-desc">
+                Camera access requires explicit user permission.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Ambient Microphone')"
+              data-search="microphone audio record"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-solid fa-podcast"></i>
+              </div>
+              <div class="module-name">Ambient Audio</div>
+              <div class="module-desc">
+                Microphone access requires explicit user permission.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('SMS & Message Logs')"
+              data-search="sms text message inbox"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-solid fa-envelope-open-text"></i>
+              </div>
+              <div class="module-name">SMS & Messages</div>
+              <div class="module-desc">
+                External messaging integrations require authorization.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Clipboard Sync')"
+              data-search="clipboard copy paste text"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-solid fa-clipboard"></i>
+              </div>
+              <div class="module-name">Clipboard Sync</div>
+              <div class="module-desc">
+                Clipboard operations require user interaction and permission.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('Keyboard Diagnostics')"
+              data-search="keyboard keystrokes input diagnostics"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-solid fa-keyboard"></i>
+              </div>
+              <div class="module-name">Keyboard Diagnostics</div>
+              <div class="module-desc">
+                Authorized interface diagnostics only.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+
+            <div
+              class="module-card"
+              onclick="triggerModule('US IP Registration')"
+              data-search="us ip registration activation"
+            >
+              <div class="module-status"></div>
+              <div class="module-icon">
+                <i class="fa-solid fa-globe"></i>
+              </div>
+              <div class="module-name">US IP Registration</div>
+              <div class="module-desc">
+                Region/gateway configuration for supported services.
+              </div>
+              <div class="module-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- SERVICE -->
+
+      <section
+        id="serviceTab"
+        class="tab-panel hidden"
+      >
+
+        <div class="content-top">
+
+          <div class="content-heading">
+            <h2>Tiered Access Plans</h2>
+
+            <p>
+              Choose an authorized service configuration plan
+              and continue through the IPC registration process.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div
+          class="service-grid"
+          id="servicePlans"
+        >
+
+          <!-- PLAN 1 -->
+
+          <div class="service-card featured">
+
+            <div
+              class="device-icon"
+              style="margin-bottom:12px;"
+            >
+              <i class="fa-solid fa-bolt"></i>
+            </div>
+
+            <h3>
+              Full Control Activation
+            </h3>
+
+            <p>
+              Complete authorized service configuration with
+              supported telemetry and account assistance.
+            </p>
+
+            <div class="service-price">
+              ৳3,000
+              <small>/ full package</small>
+            </div>
+
+            <ul class="service-list">
+
+              <li>
+                <i class="fa-solid fa-check"></i>
+                Supported service configuration
+              </li>
+
+              <li>
+                <i class="fa-solid fa-check"></i>
+                Gateway configuration assistance
+              </li>
+
+              <li>
+                <i class="fa-solid fa-check"></i>
+                Priority support
+              </li>
+
+              <li>
+                <i class="fa-solid fa-check"></i>
+                Telemetry diagnostics
+              </li>
+
+            </ul>
+
+            <button
+              class="service-btn primary"
+              type="button"
+              onclick="orderActivation(
+                'Full Control Activation',
+                '৳3,000'
+              )"
+            >
+              <i class="fa-brands fa-whatsapp"></i>
+              Activate Now
+            </button>
+
+          </div>
+
+
+          <!-- PLAN 2 -->
+
+          <div
+            class="service-card"
+            style="
+              border-color:rgba(0,212,255,.35);
+              background:
+              radial-gradient(
+                circle at 100% 0%,
+                rgba(0,212,255,.12),
+                transparent 40%
+              ),
+              linear-gradient(
+                145deg,
+                rgba(19,24,51,.98),
+                rgba(9,13,27,.98)
+              );
+            "
+          >
+
+            <div
+              class="device-icon"
+              style="
+                margin-bottom:12px;
+                background:rgba(0,212,255,.15);
+                color:#00d4ff;
+              "
+            >
+              <i class="fa-solid fa-infinity"></i>
+            </div>
+
+            <h3>
+              Lifetime Premium Plan
+            </h3>
+
+            <p>
+              Long-term access to supported service configuration
+              and future interface updates.
+            </p>
+
+            <div class="service-price">
+              ৳6,500
+              <small>/ lifetime</small>
+            </div>
+
+            <ul class="service-list">
+
+              <li>
+                <i class="fa-solid fa-check"></i>
+                Lifetime service support
+              </li>
+
+              <li>
+                <i class="fa-solid fa-check"></i>
+                Gateway configuration
+              </li>
+
+              <li>
+                <i class="fa-solid fa-check"></i>
+                Priority operator support
+              </li>
+
+            </ul>
+
+            <button
+              class="service-btn primary"
+              style="
+                background:
+                linear-gradient(
+                  135deg,
+                  #00d4ff,
+                  #735cff
+                );
+              "
+              type="button"
+              onclick="orderActivation(
+                'Lifetime Premium Plan',
+                '৳6,500'
+              )"
+            >
+              <i class="fa-brands fa-whatsapp"></i>
+              Activate Now
+            </button>
+
+          </div>
+
+
+          <!-- PLAN 3 -->
+
+          <div class="service-card">
+
+            <div
+              class="device-icon"
+              style="margin-bottom:12px;"
+            >
+              <i class="fa-solid fa-headset"></i>
+            </div>
+
+            <h3>
+              Direct Team Support
+            </h3>
+
+            <p>
+              Contact the technical operator for deployment
+              and configuration assistance.
+            </p>
+
+            <ul
+              class="service-list"
+              style="margin-top:28px;"
+            >
+
+              <li>
+                <i class="fa-solid fa-check"></i>
+                Configuration diagnostics
+              </li>
+
+              <li>
+                <i class="fa-solid fa-check"></i>
+                Resolution assistance
+              </li>
+
+            </ul>
+
+            <button
+              class="service-btn"
+              type="button"
+              onclick="orderActivation(
+                'Direct Team Support',
+                'Support Request'
+              )"
+            >
+              <i class="fa-brands fa-whatsapp"></i>
+              Contact Team
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <footer>
+
+      <div>
+        <strong>Cyber Team Help</strong>
+        — Advanced Control Center
+      </div>
+
+      <div>
+        Authorized Interface • 2026 Engine
+      </div>
+
+    </footer>
+
+  </div>
+
+
+  <!-- ================= IPC MODAL ================= -->
+
+  <div
+    id="activationModal"
+    class="activation-modal"
+    aria-hidden="true"
+  >
+
+    <div
+      class="activation-overlay"
+      onclick="closeActivationModal()"
+    ></div>
+
+
+    <div class="activation-box">
+
+      <button
+        class="activation-close"
+        type="button"
+        onclick="closeActivationModal()"
+        aria-label="Close"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+
+      <!-- IPC PROTECTION VIEW -->
+
+      <div id="ipcProtectionView">
+
+        <div class="protocol-badge">
+
+          <i class="fa-solid fa-shield-halved"></i>
+
+          IPC SECURITY REGISTRATION
+
+        </div>
+
+
+        <h2>
+          IPC Registration Required
+        </h2>
+
+
+        <p class="activation-intro">
+
+          আপনার নির্বাচিত
+          <strong id="ipcSelectedOption">
+            service / option
+          </strong>
+          চালু করার আগে IPC Registration সম্পন্ন করতে হবে।
+
+        </p>
+
+
+        <p class="activation-intro">
+
+          IPC Registration একটি
+          <strong>unique security reference layer</strong>
+          হিসেবে কাজ করে। এটি authorized service request,
+          session এবং support communication শনাক্ত ও
+          সঠিক request-এর সাথে যুক্ত রাখতে সাহায্য করে।
+
+        </p>
+
+
+        <div class="security-notice">
+
+          <div class="security-notice-icon">
+            <i class="fa-solid fa-lock"></i>
+          </div>
+
+          <div>
+
+            <h3>
+              Internet Security & Protection
+            </h3>
+
+            <p>
+
+              নিরাপদ internet communication-এর জন্য website/server-এ
+              HTTPS/TLS ব্যবহার করা প্রয়োজন। IPC Registration-এর মাধ্যমে
+              একটি unique reference তৈরি হয়, যা authorized request
+              শনাক্তকরণ ও protected service workflow-এ ব্যবহার করা যায়।
+
+              <br><br>
+
+              <strong style="color:#cbd5e8;">
+                IPC code নিজে encryption key, password বা OTP নয়।
+              </strong>
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- PROTECTION -->
+
+        <button
+          class="protection-btn"
+          type="button"
+          onclick="toggleProtectionDetails()"
+        >
+
+          <i class="fa-solid fa-shield-halved"></i>
+
+          &nbsp; Protection — কীভাবে কাজ করে?
+
+          <i
+            id="protectionChevron"
+            class="fa-solid fa-chevron-down"
+          ></i>
+
+        </button>
+
+
+        <div
+          id="protectionDetails"
+          class="protection-details hidden"
+        >
+
+          <ul>
+
+            <li>
+              <i class="fa-solid fa-circle-check"></i>
+              Authorized service request-এর জন্য unique IPC reference।
+            </li>
+
+            <li>
+              <i class="fa-solid fa-circle-check"></i>
+              Service/order identification ও support verification-এ
+              reference হিসেবে ব্যবহার করা যায়।
+            </li>
+
+            <li>
+              <i class="fa-solid fa-circle-check"></i>
+              Protected communication-এর জন্য HTTPS/TLS এবং
+              server-side security ব্যবহার করা উচিত।
+            </li>
+
+            <li>
+              <i class="fa-solid fa-circle-check"></i>
+              IPC code কোনো password বা encryption key হিসেবে ব্যবহার করা হয় না।
+            </li>
+
+            <li>
+              <i class="fa-solid fa-circle-check"></i>
+              Camera, microphone, location বা অন্য sensitive permission
+              ব্যবহার করতে হলে সংশ্লিষ্ট user/device-এর explicit authorization
+              প্রয়োজন।
+            </li>
+
+          </ul>
+
+        </div>
+
+
+        <!-- ACTIVATION BUTTON -->
+
+        <button
+          class="order-ipc-btn"
+          type="button"
+          onclick="goToPlans()"
+        >
+
+          <i class="fa-solid fa-bolt"></i>
+
+          Click Activation
+
+          <i class="fa-solid fa-arrow-right"></i>
+
+        </button>
+
+      </div>
+
+
+      <!-- FINAL ACTIVATION VIEW -->
+
+      <div
+        id="ipcActivationView"
+        class="hidden"
+      >
+
+        <div class="protocol-badge">
+
+          <i class="fa-solid fa-circle-check"></i>
+
+          IPC ACTIVATION READY
+
+        </div>
+
+
+        <h2 id="activationTitle">
+          Activation Active
+        </h2>
+
+
+        <p class="activation-intro">
+
+          আপনার নির্বাচিত service-এর activation request
+          প্রস্তুত হয়েছে। নিচের IPC reference code-টি
+          support/order verification-এর জন্য ব্যবহার করুন।
+
+        </p>
+
+
+        <div class="ipc-registration-card">
+
+          <div class="ipc-card-header">
+
+            <div class="ipc-card-icon">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+
+            <div>
+
+              <h3>
+                IPC Protocol Registration
+              </h3>
+
+              <span>
+                Security reference generated for this request
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="ipc-info">
+
+            <div class="ipc-row">
+
+              <span>
+                Selected Service
+              </span>
+
+              <strong id="selectedService">
+                —
+              </strong>
+
+            </div>
+
+
+            <div class="ipc-row">
+
+              <span>
+                Service Price
+              </span>
+
+              <strong id="selectedPrice">
+                —
+              </strong>
+
+            </div>
+
+
+            <div class="ipc-row">
+
+              <span>
+                Protocol Status
+              </span>
+
+              <strong class="status-active">
+                <i class="fa-solid fa-circle-check"></i>
+                ACTIVATION ACTIVE
+              </strong>
+
+            </div>
+
+
+            <div class="ipc-row">
+
+              <span>
+                IPC Reference
+              </span>
+
+              <strong
+                class="ipc-code"
+                id="generatedIPCCode"
+              >
+                IPC-PENDING
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <button
+            class="copy-ipc-btn"
+            type="button"
+            onclick="copyIPCCode()"
+          >
+
+            <i class="fa-regular fa-copy"></i>
+
+            Copy IPC Reference
+
+          </button>
+
+
+          <button
+            class="order-ipc-btn"
+            type="button"
+            onclick="sendIPCToWhatsApp()"
+          >
+
+            <i class="fa-brands fa-whatsapp"></i>
+
+            Open WhatsApp & Continue
+
+          </button>
+
+        </div>
+
+
+        <div class="ipc-footer-note">
+
+          <i class="fa-solid fa-circle-info"></i>
+
+          <p>
+
+            <strong>Important:</strong>
+            IPC Reference একটি service/security reference হিসেবে
+            ব্যবহৃত হয়। এটি কোনো password, OTP বা ব্যক্তিগত
+            authentication credential নয়। Sensitive credential
+            WhatsApp বা অন্য কোনো chat-এ পাঠাবেন না।
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- TOAST -->
+
+  <div
+    class="toast"
+    id="toast"
+  >
+
+    <i class="fa-solid fa-circle-check"></i>
+
+    <span id="toastText">
+      Action completed.
+    </span>
+
+  </div>
+
+
+  <!-- ================= JAVASCRIPT ================= -->
+
+  <script>
+
+    /* ============================================
+       DEMO LOGIN
+       ============================================ */
+
+    const DEMO_USERNAME = "Rohan Ahmed";
+    const DEMO_PASSWORD = "454577";
+
+    /*
+      IMPORTANT:
+      এই login client-side  authentication।
+      Production website-এ real authentication
+      অবশ্যই server-side করতে হবে।
+    */
+
+
+    const WHATSAPP_NUMBER = "8801879939668";
+
+
+    let pendingServiceName = "";
+    let pendingServicePrice = "";
+    let currentGeneratedCode = "";
+
+
+    function $(id){
+      return document.getElementById(id);
+    }
+
+
+    /* ============================================
+       LOGIN
+       ============================================ */
+
+    $("loginForm").addEventListener("submit", function(e){
+
+      e.preventDefault();
+
+      const username = $("username").value.trim();
+      const password = $("password").value;
+
+      const status = $("loginStatus");
+
+      if(
+        username === DEMO_USERNAME &&
+        password === DEMO_PASSWORD
+      ){
+
+        status.style.color = "#25e58a";
+        status.textContent = "Authentication successful...";
+
+        setTimeout(() => {
+
+          $("loginScreen").classList.add("hidden");
+          $("app").classList.remove("hidden");
+
+          updateTelemetry();
+
+        }, 450);
+
+      }else{
+
+        status.style.color = "#ff5d75";
+        status.textContent =
+          "Invalid username or password.";
+
+      }
+
+    });
+
+
+    /* ============================================
+       LOGOUT
+       ============================================ */
+
+    $("logoutBtn").addEventListener("click", function(){
+
+      $("app").classList.add("hidden");
+      $("loginScreen").classList.remove("hidden");
+
+      $("password").value = "";
+      $("loginStatus").textContent = "";
+
+      switchTab("social");
+
+    });
+
+
+    /* ============================================
+       TAB SWITCH
+       ============================================ */
+
+    function switchTab(tab){
+
+      const tabs = {
+        social: $("socialTab"),
+        control: $("controlTab"),
+        service: $("serviceTab")
+      };
+
+      Object.values(tabs).forEach(section => {
+        section.classList.add("hidden");
+      });
+
+      if(tabs[tab]){
+        tabs[tab].classList.remove("hidden");
+      }
+
+
+      document.querySelectorAll(".nav-btn")
+        .forEach(btn => {
+
+          btn.classList.toggle(
+            "active",
+            btn.dataset.tab === tab
+          );
+
+        });
+
+    }
+
+
+    /* ============================================
+       EVERY MODULE → IPC REGISTRATION
+       ============================================ */
+
+    function triggerModule(moduleName){
+
+      openIPCModal(moduleName);
+
+    }
+
+
+    function openIPCModal(serviceName){
+
+      pendingServiceName = serviceName;
+      pendingServicePrice = "";
+
+      $("ipcSelectedOption").textContent = serviceName;
+
+      $("ipcProtectionView").classList.remove("hidden");
+      $("ipcActivationView").classList.add("hidden");
+
+      $("protectionDetails").classList.add("hidden");
+
+      $("protectionChevron").className =
+        "fa-solid fa-chevron-down";
+
+      $("activationModal").classList.add("open");
+      $("activationModal")
+        .setAttribute("aria-hidden","false");
+
+      document.body.classList.add("modal-open");
+
+    }
+
+
+    /* ============================================
+       PROTECTION TOGGLE
+       ============================================ */
+
+    function toggleProtectionDetails(){
+
+      const details = $("protectionDetails");
+      const chevron = $("protectionChevron");
+
+      details.classList.toggle("hidden");
+
+      if(details.classList.contains("hidden")){
+
+        chevron.className =
+          "fa-solid fa-chevron-down";
+
+      }else{
+
+        chevron.className =
+          "fa-solid fa-chevron-up";
+
+      }
+
+    }
+
+
+    /* ============================================
+       CLOSE MODAL
+       ============================================ */
+
+    function closeActivationModal(){
+
+      $("activationModal").classList.remove("open");
+
+      $("activationModal")
+        .setAttribute("aria-hidden","true");
+
+      document.body.classList.remove("modal-open");
+
+    }
+
+
+    /* ============================================
+       PROTECTION → SERVICE PLANS
+       ============================================ */
+
+    function goToPlans(){
+
+      closeActivationModal();
+
+      switchTab("service");
+
+      setTimeout(() => {
+
+        const plans = $("servicePlans");
+
+        if(plans){
+
+          plans.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+          });
+
+        }
+
+      },150);
+
+    }
+
+
+    /* ============================================
+       GENERATE IPC CODE
+       ============================================ */
+
+    function generateIPCCode(){
+
+      const timestamp =
+        Date.now()
+          .toString(36)
+          .toUpperCase();
+
+      const random =
+        Math.random()
+          .toString(36)
+          .substring(2,8)
+          .toUpperCase();
+
+      return `IPC-CTH-${timestamp}-${random}`;
+
+    }
+
+
+    /* ============================================
+       PLAN ACTIVATION
+       ============================================ */
+
+    function orderActivation(
+      serviceName,
+      servicePrice
+    ){
+
+      pendingServiceName = serviceName;
+      pendingServicePrice = servicePrice;
+
+      currentGeneratedCode = generateIPCCode();
+
+
+      $("selectedService").textContent =
+        serviceName;
+
+      $("selectedPrice").textContent =
+        servicePrice;
+
+      $("generatedIPCCode").textContent =
+        currentGeneratedCode;
+
+
+      $("activationTitle").textContent =
+        "Activation Active";
+
+
+      $("ipcProtectionView")
+        .classList.add("hidden");
+
+      $("ipcActivationView")
+        .classList.remove("hidden");
+
+
+      $("activationModal")
+        .classList.add("open");
+
+      $("activationModal")
+        .setAttribute("aria-hidden","false");
+
+      document.body.classList.add("modal-open");
+
+    }
+
+
+    /* ============================================
+       COPY IPC
+       ============================================ */
+
+    async function copyIPCCode(){
+
+      if(!currentGeneratedCode){
+
+        showToast("IPC code is not available.");
+
+        return;
+
+      }
+
+
+      try{
+
+        await navigator.clipboard.writeText(
+          currentGeneratedCode
+        );
+
+        showToast(
+          "IPC Reference copied successfully."
+        );
+
+      }catch(error){
+
+        const textarea =
+          document.createElement("textarea");
+
+        textarea.value =
+          currentGeneratedCode;
+
+        document.body.appendChild(textarea);
+
+        textarea.select();
+
+        document.execCommand("copy");
+
+        textarea.remove();
+
+        showToast(
+          "IPC Reference copied successfully."
+        );
+
+      }
+
+    }
+
+
+    /* ============================================
+       WHATSAPP
+       ============================================ */
+
+    function sendIPCToWhatsApp(){
+
+      if(!currentGeneratedCode){
+
+        showToast(
+          "Please generate an IPC code first."
+        );
+
+        return;
+
+      }
+
+
+      const message =
+
+`Assalamu Alaikum,
+
+আমি Cyber Team Help-এর একটি service activation request করতে চাই।
+
+Service:
+${pendingServiceName}
+
+Service Price:
+${pendingServicePrice}
+
+IPC Reference Code:
+${currentGeneratedCode}
+
+অনুগ্রহ করে এই IPC reference code ব্যবহার করে আমার authorized service registration / activation process সম্পর্কে নির্দেশনা দিন।
+
+নোট:
+IPC code একটি service/security reference হিসেবে ব্যবহৃত হচ্ছে। এটি কোনো password, OTP বা encryption key নয়।
+
+ধন্যবাদ।
+Cyber Team Help`;
+
+
+      const whatsappURL =
+        "https://wa.me/" +
+        WHATSAPP_NUMBER +
+        "?text=" +
+        encodeURIComponent(message);
+
+
+      window.open(
+        whatsappURL,
+        "_blank",
+        "noopener"
+      );
+
+    }
+
+
+    /* ============================================
+       SEARCH / FILTER
+       ============================================ */
+
+    function filterModules(input, type){
+
+      const value =
+        input.value
+          .toLowerCase()
+          .trim();
+
+
+      const section =
+        type === "social"
+          ? $("socialTab")
+          : $("controlTab");
+
+
+      section
+        .querySelectorAll(".module-card")
+        .forEach(card => {
+
+          const searchText =
+            (
+              card.dataset.search +
+              " " +
+              card.innerText
+            ).toLowerCase();
+
+          card.style.display =
+            searchText.includes(value)
+              ? ""
+              : "none";
+
+        });
+
+    }
+
+
+    /* ============================================
+       TOAST
+       ============================================ */
+
+    let toastTimer;
+
+    function showToast(message){
+
+      $("toastText").textContent =
+        message;
+
+      $("toast").classList.add("show");
+
+      clearTimeout(toastTimer);
+
+      toastTimer = setTimeout(() => {
+
+        $("toast").classList.remove("show");
+
+      },2600);
+
+    }
+
+
+    /* ============================================
+       TELEMETRY
+       Browser APIs only
+       ============================================ */
+
+    async function updateBattery(){
+
+      if(!("getBattery" in navigator)){
+
+        $("batteryValue").textContent =
+          "N/A";
+
+        $("batteryStatus").textContent =
+          "Battery API unavailable";
+
+        return;
+
+      }
+
+
+      try{
+
+        const battery =
+          await navigator.getBattery();
+
+
+        function renderBattery(){
+
+          const level =
+            Math.round(
+              battery.level * 100
+            );
+
+          $("batteryValue").textContent =
+            level + "%";
+
+          $("batteryBar").style.width =
+            level + "%";
+
+          $("batteryStatus").textContent =
+            battery.charging
+              ? "Charging"
+              : "Not charging";
+
+        }
+
+
+        renderBattery();
+
+        battery.addEventListener(
+          "levelchange",
+          renderBattery
+        );
+
+        battery.addEventListener(
+          "chargingchange",
+          renderBattery
+        );
+
+      }catch(error){
+
+        $("batteryValue").textContent =
+          "N/A";
+
+        $("batteryStatus").textContent =
+          "Battery information unavailable";
+
+      }
+
+    }
+
+
+    function updateNetwork(){
+
+      const online =
+        navigator.onLine;
+
+      $("networkStatus").textContent =
+        online
+          ? "ONLINE"
+          : "OFFLINE";
+
+
+      const connection =
+        navigator.connection ||
+        navigator.mozConnection ||
+        navigator.webkitConnection;
+
+
+      if(connection){
+
+        $("networkType").textContent =
+          "Type: " +
+          (
+            connection.effectiveType ||
+            "—"
+          ).toUpperCase();
+
+        $("networkSpeed").textContent =
+          "Down: " +
+          (
+            connection.downlink
+              ? connection.downlink + " Mbps"
+              : "—"
+          );
+
+      }else{
+
+        $("networkType").textContent =
+          "Type: —";
+
+        $("networkSpeed").textContent =
+          "Down: —";
+
+      }
+
+    }
+
+
+    function updateDeviceInfo(){
+
+      const memory =
+        navigator.deviceMemory;
+
+      $("memoryValue").textContent =
+        memory
+          ? memory + " GB"
+          : "N/A";
+
+
+      $("memoryDetail").textContent =
+        memory
+          ? "Approximate browser-reported memory"
+          : "Memory API unavailable";
+
+
+      const cores =
+        navigator.hardwareConcurrency;
+
+      $("cpuCores").textContent =
+        cores
+          ? cores + " cores"
+          : "N/A";
+
+
+      $("screenResolution").textContent =
+        `${screen.width}×${screen.height}`;
+
+
+      $("viewportSize").textContent =
+        `Viewport: ${window.innerWidth}×${window.innerHeight}`;
+
+
+      const timezone =
+        Intl.DateTimeFormat()
+          .resolvedOptions()
+          .timeZone;
+
+
+      $("timezoneValue").textContent =
+        timezone || "—";
+
+
+      $("languageValue").textContent =
+        "Language: " +
+        (
+          navigator.language ||
+          "—"
+        );
+
+
+      $("sessionStatus").textContent =
+        "ACTIVE";
+
+
+      $("lastTelemetry").textContent =
+        new Date().toLocaleTimeString();
+
+    }
+
+
+    function updateLatency(){
+
+      const start =
+        performance.now();
+
+
+      fetch(
+        window.location.href,
+        {
+          method:"HEAD",
+          cache:"no-store"
+        }
+      )
+      .then(() => {
+
+        const latency =
+          Math.round(
+            performance.now() - start
+          );
+
+
+        $("latencyValue").textContent =
+          latency + " ms";
+
+
+        $("connectionQuality").textContent =
+          latency < 100
+            ? "Good connection"
+            : latency < 250
+              ? "Normal connection"
+              : "Higher latency";
+
+      })
+      .catch(() => {
+
+        $("latencyValue").textContent =
+          "N/A";
+
+        $("connectionQuality").textContent =
+          "Latency test unavailable";
+
+      });
+
+    }
+
+
+    function updateTelemetry(){
+
+      updateBattery();
+      updateNetwork();
+      updateDeviceInfo();
+      updateLatency();
+
+    }
+
+
+    window.addEventListener(
+      "online",
+      updateNetwork
+    );
+
+    window.addEventListener(
+      "offline",
+      updateNetwork
+    );
+
+    window.addEventListener(
+      "resize",
+      updateDeviceInfo
+    );
+
+
+    /* ============================================
+       ESC CLOSE MODAL
+       ============================================ */
+
+    document.addEventListener(
+      "keydown",
+      function(e){
+
+        if(e.key === "Escape"){
+
+          closeActivationModal();
+
+        }
+
+      }
+    );
+
+
+    /* ============================================
+       INITIAL
+       ============================================ */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function(){
+
+        switchTab("social");
+
+        updateNetwork();
+        updateDeviceInfo();
+
+        setInterval(
+          updateDeviceInfo,
+          30000
+        );
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
